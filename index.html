@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>강호혈풍록 — 풍운객잔</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="toast-root"></div>
+
+  <section id="screen-title" class="screen active">
+    <div class="rain-fx"></div>
+    <div class="title-layout">
+      <p class="eyebrow">정 · 사 · 마</p>
+      <h1>강호혈풍록</h1>
+      <p class="subtitle">폭풍전야의 풍운객잔</p>
+      <p class="lead">누구도 먼저 칼을 뽑지 못하던 태평이었다. 순양장보도의 소문이 퍼지던 밤, 폭우 속 객잔으로 살수단이 들이닥친다.</p>
+      <div class="faction-row">
+        <span class="fac orthodox">정파</span>
+        <span class="fac demonic">마교</span>
+        <span class="fac unorthodox">사파</span>
+      </div>
+      <div class="title-actions">
+        <button id="btn-enter" class="seal">들다</button>
+        <button id="btn-pick" class="text-btn">무인을 고른다</button>
+        <button id="btn-sound" class="text-btn" data-sound>소리 켜짐</button>
+        <button id="btn-wipe" class="text-btn">기록 지우기</button>
+      </div>
+      <p class="fine">기획서 v2.0의 프롤로그, 성수비경, 자미원, 세외 관문, 산해경, 구결과 창고 · WASD · 마우스 · QWER · 동행은 곁에서 함께 벤다</p>
+    </div>
+  </section>
+
+  <section id="screen-select" class="screen">
+    <div class="rain-fx"></div>
+    <header class="panel-head">
+      <div>
+        <button id="btn-back-title" class="text-btn">표지로</button>
+        <p class="eyebrow">외유한 무인</p>
+        <h2>객잔에 모인 열둘</h2>
+      </div>
+      <p>세 진영의 열두 갈래가 객잔에 모였다. 북극성을 닫으면 치우와 해동의 비급이 더 도착한다. 문파를 고르면 그 밤의 무공이 정해진다.</p>
+    </header>
+    <div id="roster"></div>
+    <footer class="select-foot">
+      <p id="select-blurb">무인을 고르십시오.</p>
+      <button id="btn-confirm" class="primary" disabled>풍운객잔으로</button>
+    </footer>
+  </section>
+
+  <section id="screen-hub" class="screen">
+    <div class="rain-fx"></div>
+    <header class="hub-top">
+      <div>
+        <p id="hub-faction" class="eyebrow"></p>
+        <h2 id="hub-name">풍운객잔</h2>
+        <p id="hub-story"></p>
+      </div>
+      <div id="hub-stats"></div>
+    </header>
+    <div class="hub-grid">
+      <button class="place" id="place-quest">
+        <strong id="quest-title">객잔 주인 · 프롤로그</strong>
+        <span id="quest-desc">폭우의 습격. 장보도 조각을 노리는 살수단을 막는다.</span>
+      </button>
+      <button class="place" id="place-train">
+        <strong>수련장 허수아비</strong>
+        <span>실시간 초당 피해와 치명, 상태이상 빈도를 재 본다. 프리셋 대신 지금 빌드를 그대로 두드린다.</span>
+      </button>
+      <button class="place" id="place-gear">
+        <strong>신병로</strong>
+        <span>소재를 녹여 제식·기철 병기를 벼리고, 만년한철은 병기에 상감한다.</span>
+      </button>
+      <button class="place" id="place-tree">
+        <strong>주천경맥도</strong>
+        <span>혈자리를 열고, 원하면 경맥을 초기화한다. 주화입마는 위력을 사고 몸을 내준다.</span>
+      </button>
+      <button class="place" id="place-shop">
+        <strong>비급 상인</strong>
+        <span>소재로 구결을 사고, 광역과 보스 초식에 따로 끼운다.</span>
+      </button>
+    </div>
+    <section id="frontier" class="sealed">
+      <h3 id="frontier-title">세외일통맹 · 봉인</h3>
+      <p id="frontier-copy">장보도 파편이 뜨거워진 뒤에야 여섯 관문이 열린다. 동영, 초원, 북해, 혈교, 서장, 남만. 그 뒤에 가면과 산해경이 있다.</p>
+      <div id="frontier-board" hidden></div>
+    </section>
+    <section id="constellation" class="sealed">
+      <h3 id="constellation-title">성수비경 · 봉인</h3>
+      <p id="constellation-copy">동방 청룡, 북방 현무, 서방 백호, 남방 주작, 그리고 중앙의 황룡. 지맥이 무너진 뒤에야 스물여덟 별자리가 땅에 떨어진다. 이 밤의 이야기는 아직 객잔 마당에서 끝난다.</p>
+      <div id="constellation-board" hidden></div>
+    </section>
+    <div class="hub-actions">
+      <button id="btn-form" class="text-btn" hidden>환골탈태</button>
+      <button id="btn-ally" class="text-btn">동행 · 홀로 선다</button>
+      <button id="btn-change-char" class="text-btn">다른 무인으로 갈아탄다</button>
+      <button id="btn-hub-title" class="text-btn">표지로</button>
+    </div>
+  </section>
+
+  <section id="screen-combat" class="screen">
+    <canvas id="game" aria-label="전투 화면"></canvas>
+    <div id="hud">
+      <div id="hud-left">
+        <div id="portrait" class="portrait">무</div>
+        <div style="flex:1">
+          <div id="hud-name">무인</div>
+          <div id="hud-sub"></div>
+          <div class="bar hp" title="생명"><span id="hp-fill"></span></div>
+          <div class="bar sh" title="호신강기"><span id="sh-fill"></span></div>
+          <div class="bar qi" title="내공"><span id="qi-fill"></span></div>
+          <div class="bar xp" title="수련"><span id="xp-fill"></span></div>
+        </div>
+      </div>
+      <div id="hud-top">
+        <div id="wave-title"></div>
+        <div id="synergy"></div>
+        <div id="pips" class="pips" hidden></div>
+        <div id="bossbar" hidden>
+          <div id="boss-name"></div>
+          <div class="bar sh"><span id="boss-sh"></span></div>
+          <div class="bar hp"><span id="boss-hp"></span></div>
+        </div>
+      </div>
+      <canvas id="minimap" width="168" height="120"></canvas>
+      <div id="hint">검흔+타격 = 내상 · 출혈+중독 = 혈독 · 빙결+뇌전 = 초전도</div>
+      <div id="banner" hidden><strong></strong><span></span></div>
+      <div id="hud-bottom">
+        <div id="skills"></div>
+        <div id="potions"></div>
+      </div>
+      <aside id="dps" hidden>
+        <h4>수련장</h4>
+        <p id="dps-value">0</p>
+        <p id="dps-extra"></p>
+        <button id="btn-leave-train" class="ghost">수련을 마친다</button>
+      </aside>
+    </div>
+    <div id="intro-card" class="overlay-card" hidden>
+      <p class="eyebrow" id="intro-kicker">풍운객잔</p>
+      <h3 id="intro-title">폭우의 습격</h3>
+      <p id="intro-copy"></p>
+      <div class="keys">
+        <b>WASD</b><span>이동</span>
+        <b>마우스</b><span>조준 · 좌클릭 평타 삼연</span>
+        <b>Space</b><span>경공. 잠시 칼이 스친다</span>
+        <b>Q W E R</b><span>무공. 내공을 쓴다</span>
+        <b>1 2 3</b><span>영약</span>
+        <b>Tab / K</b><span>신병로 / 주천경맥도</span>
+        <b>Esc</b><span>숨을 고른다</span>
+      </div>
+      <button id="btn-fight" class="primary">검을 뽑는다</button>
+    </div>
+    <div id="pause-card" class="overlay-card" hidden>
+      <h3>숨을 고른다</h3>
+      <p>비는 그치지 않았다. 전투는 멈춰 있다.</p>
+      <div class="row">
+        <button id="btn-resume" class="primary">이어하기</button>
+        <button id="btn-pause-tree" class="ghost">주천경맥도</button>
+        <button id="btn-pause-gear" class="ghost">신병로</button>
+        <button id="btn-retreat" class="ghost">객잔으로 물러난다</button>
+        <button id="btn-sound-pause" class="ghost" data-sound>소리 켜짐</button>
+      </div>
+    </div>
+    <pre id="fatal" hidden></pre>
+  </section>
+
+  <section id="screen-result" class="screen">
+    <div class="rain-fx"></div>
+    <div id="result-inner"></div>
+  </section>
+
+  <div id="modal" hidden>
+    <div class="modal-backdrop" id="modal-back"></div>
+    <div class="modal-panel">
+      <header>
+        <h3 id="modal-title">주천경맥도</h3>
+        <button id="modal-close" class="text-btn">닫기</button>
+      </header>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js?v=12"></script>
+  <script src="js/game.js?v=12"></script>
+</body>
+</html>
